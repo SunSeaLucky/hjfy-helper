@@ -1,27 +1,20 @@
 {
   "manifest_version": 3,
   "name": "hjfy arXiv Helper",
-  "version": "1.0.0",
-  "description": "Show a button on arXiv abs/pdf pages to jump to the corresponding hjfy.top page.",
+  "version": "1.1.0",
+  "description": "Jump between arXiv paper pages and their hjfy.top mirror with the toolbar button.",
   "permissions": ["activeTab"],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "Open this paper on hjfy.top",
+    "default_title": "Jump between arXiv and hjfy.top",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
     }
   },
-  "content_scripts": [
-    {
-      "matches": ["*://*.arxiv.org/abs/*"],
-      "js": ["content.js"],
-      "run_at": "document_idle"
-    }
-  ],
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
