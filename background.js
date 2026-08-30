@@ -26,6 +26,8 @@ function targetFor(url) {
 
 chrome.action.onClicked.addListener((tab) => {
   const target = targetFor(tab.url || '');
-  if (!target || tab.id === undefined) return;
-  chrome.tabs.update(tab.id, { url: target });
+  if (!target) return;
+  // Always open the destination in a new tab right next to the current
+  // one, leaving the original page untouched.
+  chrome.tabs.create({ url: target, index: tab.index + 1, openerTabId: tab.id });
 });

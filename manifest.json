@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "hjfy arXiv Helper",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Jump between arXiv paper pages and their hjfy.top mirror with the toolbar button.",
   "permissions": ["activeTab"],
   "background": {

@@ -4,10 +4,13 @@ A Chrome extension that jumps between an arXiv paper page and its
 `hjfy.top` mirror — in both directions.
 
 - On an arXiv paper page (`arxiv.org/abs/<id>` or `arxiv.org/pdf/<id>`),
-  click the extension's **toolbar button** to go to
-  `https://hjfy.top/arxiv/<id>`.
-- On a `hjfy.top/arxiv/<id>` page, click the toolbar button again to go
-  back to `https://arxiv.org/abs/<id>`.
+  click the extension's **toolbar button** to open
+  `https://hjfy.top/arxiv/<id>` in a new tab.
+- On a `hjfy.top/arxiv/<id>` page, click the toolbar button again to open
+  `https://arxiv.org/abs/<id>` in a new tab.
+
+The original page is always left untouched — the destination opens in a
+new tab next to the current one.
 
 The toolbar button is the single control for both directions. No floating
 button is injected into pages: Chrome's built-in PDF viewer does not allow
