@@ -1,15 +1,31 @@
-// Toolbar button handler. This is the only way to offer the jump on
-// /pdf/ pages, since content scripts can't run inside Chrome's PDF viewer.
-// It also works on /abs/ pages as an alternative to the floating button.
+// Single entry point: the toolbar button jumps between an arXiv paper
+// page and its hjfy.top mirror, in both directions.
+//
+//   arxiv.org/abs|pdf/<id>  ->  hjfy.top/arxiv/<id>
+//   hjfy.top/arxiv/<id>     ->  arxiv.org/abs/<id>
+//
+// No floating button is injected into pages: content scripts cannot run
+// inside Chrome's built-in PDF viewer on /pdf/ pages, so the toolbar
+// button is the one consistent control everywhere.
 
-function extractArxivId(url) {
-  const m = url.match(/arxiv\.org\/(?:abs|pdf)\/([^?#/]+(?:\/[^?#/]+)?)/i);
-  if (!m) return null;
-  return m[1].replace(/\.pdf$/i, '').replace(/v\d+$/i, '');
+const ARXIV_PAGE_RE = /arxiv\.org\/(?:abs|pdf)\/([^?#/]+(?:\/[^?#/]+)?)/i;
+const HJFY_PAGE_RE = /hjfy\.top\/arxiv\/([^?#/]+(?:\/[^?#/]+)?)/i;
+
+// Strips an optional ".pdf" extension or version suffix ("v2").
+function cleanId(id) {
+  return id.replace(/\.pdf$/i, '').replace(/v\d+$/i, '');
+}
+
+function targetFor(url) {
+  const arxiv = url.match(ARXIV_PAGE_RE);
+  if (arxiv) return `https://hjfy.top/arxiv/${cleanId(arxiv[1])}`;
+  const hjfy = url.match(HJFY_PAGE_RE);
+  if (hjfy) return `https://arxiv.org/abs/${cleanId(hjfy[1])}`;
+  return null;
 }
 
 chrome.action.onClicked.addListener((tab) => {
-  const id = extractArxivId(tab.url || '');
-  if (!id || tab.id === undefined) return;
-  chrome.tabs.update(tab.id, { url: `https://hjfy.top/arxiv/${id}` });
+  const target = targetFor(tab.url || '');
+  if (!target || tab.id === undefined) return;
+  chrome.tabs.update(tab.id, { url: target });
 });
