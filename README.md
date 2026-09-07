@@ -9,8 +9,11 @@ A Chrome extension that jumps between an arXiv paper page and its
 - On a `hjfy.top/arxiv/<id>` page, click the toolbar button again to open
   `https://arxiv.org/abs/<id>` in a new tab.
 
-The original page is always left untouched — the destination opens in a
-new tab next to the current one.
+By default the destination opens in a new tab next to the current one,
+leaving the original page untouched. You can change this in the
+extension's options page (right-click the toolbar button → **Options**)
+to open the destination in the current tab instead. The choice is saved
+via `chrome.storage.sync`.
 
 The toolbar button is the single control for both directions. No floating
 button is injected into pages: Chrome's built-in PDF viewer does not allow
@@ -33,4 +36,5 @@ Old-style IDs like `hep-th/9901001` are supported.
 
 - `manifest.json` — Manifest V3 configuration
 - `background.js` — toolbar button handler, both jump directions
+- `options.html` / `options.js` — options page (new tab vs. current tab)
 - `make_icons.py` — regenerates `icons/` (stdlib only: `python3 make_icons.py`)

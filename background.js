@@ -27,7 +27,13 @@ function targetFor(url) {
 chrome.action.onClicked.addListener((tab) => {
   const target = targetFor(tab.url || '');
   if (!target) return;
-  // Always open the destination in a new tab right next to the current
-  // one, leaving the original page untouched.
-  chrome.tabs.create({ url: target, index: tab.index + 1, openerTabId: tab.id });
+  // "openMode" is set on the options page: open the destination either in
+  // a new tab next to the current one, or in the current tab itself.
+  chrome.storage.sync.get({ openMode: 'new-tab' }, ({ openMode }) => {
+    if (openMode === 'current-tab') {
+      chrome.tabs.update(tab.id, { url: target });
+    } else {
+      chrome.tabs.create({ url: target, index: tab.index + 1, openerTabId: tab.id });
+    }
+  });
 });
