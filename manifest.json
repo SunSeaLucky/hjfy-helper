@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
   "name": "hjfy arXiv Helper",
-  "version": "1.3.0",
+  "version": "1.6.0",
   "description": "Jump between arXiv paper pages and their hjfy.top mirror with the toolbar button.",
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage", "contextMenus"],
   "options_ui": {
     "page": "options.html",
-    "open_in_tab": false
+    "open_in_tab": true
   },
   "background": {
     "service_worker": "background.js"

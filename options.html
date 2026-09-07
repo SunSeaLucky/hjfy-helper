@@ -2,191 +2,176 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>hjfy arXiv Helper 设置</title>
   <style>
     :root {
       --bg: #fafafa;
-      --card-bg: #ffffff;
-      --border: #e4e4e7;
-      --text: #18181b;
-      --text-dim: #71717a;
-      --accent: #b31b1b; /* arXiv red */
-      --accent-soft: rgba(179, 27, 27, 0.06);
-      --shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      --card: #ffffff;
+      --border: #e5e5e5;
+      --text: #1a1a1a;
+      --dim: #767676;
+      --hover: #f6f6f6;
+      --dot: #1a1a1a;
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #1c1c1f;
-        --card-bg: #26262a;
-        --border: #3f3f46;
-        --text: #f4f4f5;
-        --text-dim: #a1a1aa;
-        --accent: #ef6461;
-        --accent-soft: rgba(239, 100, 97, 0.1);
-        --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        --bg: #161616;
+        --card: #1e1e1e;
+        --border: #333333;
+        --text: #eaeaea;
+        --dim: #9a9a9a;
+        --hover: #242424;
+        --dot: #eaeaea;
       }
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      padding: 28px 24px;
-      width: 400px;
       background: var(--bg);
       color: var(--text);
       font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
       font-size: 14px;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
+    main {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 72px 24px 96px;
+    }
     h1 {
-      margin: 0 0 4px;
-      font-size: 15px;
+      margin: 0;
+      font-size: 20px;
       font-weight: 600;
       letter-spacing: 0.01em;
     }
-    .subtitle {
-      margin: 0 0 20px;
-      color: var(--text-dim);
-      font-size: 12.5px;
+    .lede {
+      margin: 6px 0 0;
+      color: var(--dim);
+      font-size: 13px;
     }
-    .options { display: grid; gap: 10px; }
-    .option {
-      position: relative;
+    section { margin-top: 44px; }
+    h2 {
+      margin: 0 0 4px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--dim);
+      text-transform: uppercase;
+    }
+    .desc {
+      margin: 0 0 12px;
+      color: var(--dim);
+      font-size: 13px;
+    }
+    .group {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .row {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 14px 16px;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      box-shadow: var(--shadow);
+      gap: 12px;
+      padding: 13px 16px;
       cursor: pointer;
-      transition: border-color 0.15s ease, background 0.15s ease;
+      transition: background 0.12s ease;
     }
-    .option:hover { border-color: var(--text-dim); }
-    .option input { position: absolute; opacity: 0; pointer-events: none; }
-    .option:has(input:checked) {
-      border-color: var(--accent);
-      background: var(--accent-soft);
+    .row + .row { border-top: 1px solid var(--border); }
+    .row:hover { background: var(--hover); }
+    .row input {
+      appearance: none;
+      -webkit-appearance: none;
+      flex: none;
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      border: 1.5px solid var(--border);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: border 0.12s ease;
     }
-    .option:has(input:focus-visible) {
-      outline: 2px solid var(--accent);
+    .row input:checked { border: 5px solid var(--dot); }
+    .row input:focus-visible {
+      outline: 2px solid var(--dot);
       outline-offset: 2px;
     }
-    .glyph {
-      flex: none;
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      border-radius: 9px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      transition: color 0.15s ease, border-color 0.15s ease;
+    .row .name { flex: 1; }
+    .row .note {
+      color: var(--dim);
+      font-size: 12.5px;
     }
-    .option:has(input:checked) .glyph {
-      color: var(--accent);
-      border-color: transparent;
-      background: var(--card-bg);
-    }
-    .label { flex: 1; min-width: 0; }
-    .label strong {
-      display: block;
-      font-size: 13.5px;
-      font-weight: 600;
-    }
-    .label span {
-      display: block;
-      margin-top: 2px;
-      color: var(--text-dim);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-    .check {
-      flex: none;
-      width: 20px;
-      height: 20px;
-      color: var(--accent);
-      opacity: 0;
-      transform: scale(0.6);
-      transition: opacity 0.15s ease, transform 0.15s ease;
-    }
-    .option:has(input:checked) .check {
-      opacity: 1;
-      transform: scale(1);
-    }
-    .footer {
-      margin-top: 18px;
+    footer {
+      margin-top: 44px;
       display: flex;
-      align-items: center;
+      align-items: baseline;
       justify-content: space-between;
-      min-height: 18px;
+      color: var(--dim);
+      font-size: 12.5px;
     }
-    .hint { color: var(--text-dim); font-size: 11.5px; }
     #saved {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 500;
       opacity: 0;
-      transform: translateY(3px);
-      transition: opacity 0.2s ease, transform 0.2s ease;
+      transition: opacity 0.25s ease;
     }
-    #saved.show { opacity: 1; transform: none; }
+    #saved.show { opacity: 1; }
   </style>
 </head>
 <body>
-  <h1>跳转方式</h1>
-  <p class="subtitle">点击工具栏图标时，如何打开目标页面</p>
+  <main>
+    <h1>hjfy arXiv Helper</h1>
+    <p class="lede">设置</p>
 
-  <div class="options">
-    <label class="option">
-      <input type="radio" name="openMode" value="new-tab">
-      <span class="glyph" aria-hidden="true">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2.5" y="5.5" width="10" height="10" rx="2"/>
-          <path d="M8 4.5V4a2 2 0 0 1 2-2h5.5a2 2 0 0 1 2 2v5.5a2 2 0 0 1-2 2H15"/>
-        </svg>
-      </span>
-      <span class="label">
-        <strong>在新标签页打开</strong>
-        <span>保留当前页面，在旁边新开一个标签页</span>
-      </span>
-      <svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M4 10.5l4 4 8-9"/>
-      </svg>
-    </label>
+    <section>
+      <h2>跳转方式</h2>
+      <p class="desc">点击工具栏图标时，如何打开目标页面。</p>
+      <div class="group">
+        <label class="row">
+          <input type="radio" name="openMode" value="new-tab">
+          <span class="name">在新标签页打开</span>
+          <span class="note">保留当前页面</span>
+        </label>
+        <label class="row">
+          <input type="radio" name="openMode" value="current-tab">
+          <span class="name">在当前页面打开</span>
+          <span class="note">直接跳转</span>
+        </label>
+      </div>
+    </section>
 
-    <label class="option">
-      <input type="radio" name="openMode" value="current-tab">
-      <span class="glyph" aria-hidden="true">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2.5" y="2.5" width="15" height="15" rx="2"/>
-          <path d="M7 10h6M10.5 7.5L13 10l-2.5 2.5"/>
-        </svg>
-      </span>
-      <span class="label">
-        <strong>在当前页面打开</strong>
-        <span>直接跳转，不新开标签页</span>
-      </span>
-      <svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M4 10.5l4 4 8-9"/>
-      </svg>
-    </label>
-  </div>
+    <section>
+      <h2>AI 助手</h2>
+      <p class="desc">右键图标菜单"解释这篇论文"所使用的 AI。仅列出支持通过链接直接提问的服务。</p>
+      <div class="group">
+        <label class="row">
+          <input type="radio" name="aiTarget" value="chatgpt">
+          <span class="name">ChatGPT</span>
+          <span class="note">chatgpt.com</span>
+        </label>
+        <label class="row">
+          <input type="radio" name="aiTarget" value="claude">
+          <span class="name">Claude</span>
+          <span class="note">claude.ai</span>
+        </label>
+        <label class="row">
+          <input type="radio" name="aiTarget" value="perplexity">
+          <span class="name">Perplexity</span>
+          <span class="note">perplexity.ai</span>
+        </label>
+        <label class="row">
+          <input type="radio" name="aiTarget" value="grok">
+          <span class="name">Grok</span>
+          <span class="note">grok.com</span>
+        </label>
+      </div>
+    </section>
 
-  <div class="footer">
-    <span class="hint">设置会自动保存并同步</span>
-    <span id="saved">
-      <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M4 10.5l4 4 8-9"/>
-      </svg>
-      已保存
-    </span>
-  </div>
-
+    <footer>
+      <span>设置会自动保存并随 Chrome 同步。</span>
+      <span id="saved">已保存</span>
+    </footer>
+  </main>
   <script src="options.js"></script>
 </body>
 </html>

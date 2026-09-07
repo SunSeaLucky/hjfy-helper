@@ -15,6 +15,15 @@ extension's options page (right-click the toolbar button → **Options**)
 to open the destination in the current tab instead. The choice is saved
 via `chrome.storage.sync`.
 
+Right-clicking the toolbar button offers **让 <AI> 用中文详细解释这篇论文**:
+it opens the configured AI chat with a pre-filled prompt asking for a
+detailed Chinese explanation of the paper (works from both arXiv and
+hjfy.top pages). The AI — ChatGPT, Claude, Perplexity or Grok — is chosen
+on the options page, which opens as a regular tab. Only AIs that accept a
+prompt in the URL are offered; Kimi, DeepSeek, Doubao etc. have no such
+parameter. Chrome does not report middle/wheel clicks on toolbar icons,
+so the context menu is the trigger for this.
+
 The toolbar button is the single control for both directions. No floating
 button is injected into pages: Chrome's built-in PDF viewer does not allow
 content scripts on `/pdf/` pages, so the toolbar button keeps the behavior
